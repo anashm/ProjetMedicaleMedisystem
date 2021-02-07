@@ -29,6 +29,11 @@ Route::get('/createPatient' , function () {
 })->middleware('anas');
 
 
+
+Route::get('/logOut','LoginController@logOut')->middleware('anas');
+
+
+
 Route::get('/getSalles','SalleController@getSalles')->middleware('anas');
 
 Route::post('/getExamenFromSalle','SalleController@getExamenFromSalle')->middleware('anas');
@@ -37,6 +42,13 @@ Route::post('/createPatient','PatientController@createPatient')->middleware('ana
 
 Route::get('/getAllPatients','PatientController@getAllPatients')->middleware('anas');
 
+Route::post('/downloadWordFile','PatientController@downloadWordFile')->middleware('anas');
+
+Route::post('/SaveCompteRendu','PatientController@SaveCompteRendu')->middleware('anas');
+
+
+
+
 Route::get('/configSalle','SalleController@configSalle')->middleware('anas');
 
 Route::post('/createSalle','SalleController@createSalle')->middleware('anas');
@@ -44,6 +56,8 @@ Route::post('/createSalle','SalleController@createSalle')->middleware('anas');
 Route::post('/updateSalle','SalleController@updateSalle')->middleware('anas');
 
 Route::post('/deleteSalle','SalleController@deleteSalle')->middleware('anas');
+
+
 
 
 Route::get('/configExamen','ExamenController@configExamen')->middleware('anas');
@@ -55,4 +69,5 @@ Route::post('/getInfosFromExamenId','ExamenController@getInfosFromExamenId')->mi
 Route::post('/updateExamen','ExamenController@updateExamen')->middleware('anas');
 
 Route::post('/deleteExamen','ExamenController@deleteExamen')->middleware('anas');
+
 

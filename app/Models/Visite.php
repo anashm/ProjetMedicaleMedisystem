@@ -4,9 +4,9 @@ namespace App\Models;
 use Eloquent;
 
 
-class LignePatientSalle extends Eloquent
+class Visite extends Eloquent
 {
-    protected $table = 'ligne_patient_salle';
+    protected $table = 'visite';
 	protected $primaryKey = 'id';
 	public $timestamps = false;
 

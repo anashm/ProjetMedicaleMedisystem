@@ -203,7 +203,7 @@ $(document).ready(function(){
 	                },
 	                success: function(data) {
 	                	toastr.success('Salle modifiée avec succés','');
-	                	setTimeout(function(){ location.reload(); }, 2000);
+	                	setTimeout(function(){ location.reload(); }, 1000);
 	                
 	                }
 	            });
@@ -230,7 +230,7 @@ $(document).ready(function(){
 	                success: function(data) {
 	                	toastr.success('Salle supprimée','');
 	                	 
-                       setTimeout(function(){ location.reload(); }, 2000);
+                       setTimeout(function(){ location.reload(); }, 1000);
 	                
 	                }
 	            });
@@ -253,7 +253,7 @@ $(document).ready(function(){
 	                },
 	                success: function(data) {
 	                	toastr.success('Salle créer avec succés','');
-	                	setTimeout(function(){ location.reload(); }, 2000);
+	                	setTimeout(function(){ location.reload(); }, 1000);
 	                
 	                }
 	            });

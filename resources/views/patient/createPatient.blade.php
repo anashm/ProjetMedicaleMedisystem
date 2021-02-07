@@ -11,10 +11,10 @@
 							<div class="card card-custom" data-card="true" id="kt_card_1">
 								<div class="card-header" style="background-color: #D6EFFF !important;">
 									<div class="card-title">
-										<h3 class="card-label">INFORMATIONS PATIENT</h3>
+										<i class="flaticon-user-add" style="color: black !important;"></i>&nbsp;&nbsp;&nbsp;<h3 class="card-label" style="font: normal normal 600 16px Poppins;">INFORMATIONS PATIENT</h3>
 									</div>
 									<div class="card-toolbar">
-										<a href="#" class="btn btn-icon btn-sm btn-hover-light-primary mr-1" data-card-tool="toggle" data-toggle="tooltip" data-placement="top" title="Toggle Card">
+										<a href="#" class="btn btn-icon btn-sm btn-hover-light-primary mr-1" data-card-tool="toggle" data-toggle="tooltip" data-placement="top" title="Minimiser">
 											<i class="ki ki-arrow-down icon-nm"></i>
 										</a>
 										
@@ -57,7 +57,7 @@
 															
 														</div>
 														<div class="col-lg-3">
-															<label>Date naissance</label>
+															<label>Date naissance*</label>
 															<div class="input-group date">
 																<input type="text" class="form-control" id="kt_datepicker_2" readonly="readonly" placeholder="Select date" />
 																<div class="input-group-append">
@@ -74,14 +74,40 @@
 																<label class="radio radio-solid">
 																<input type="radio" id="radio_femme"  name="sexe_patient" checked="checked" value="femme" />
 																<span></span>Femme</label>
+
 																<label class="radio radio-solid">
 																<input type="radio" id="radio_homme" name="sexe_patient" value="homme" />
 																<span></span>Homme</label>
+
+																<label class="radio radio-solid">
+																<input type="radio" id="radio_enceinte" name="sexe_patient" value="femme_enceinte" />
+																<span></span>Femme Enceinte</label>
 															</div>
 														</div>
 														
 													</div>
 
+
+													<div class="form-group row">
+														<div class="col-lg-2">
+															<label>Allergie</label>
+															<div class="radio-inline">
+																<label class="radio radio-solid">
+																<input type="radio" id="radio_allergie_oui"  name="allergie_patient"  value="oui_allergie" />
+																<span></span>Oui</label>
+
+																<label class="radio radio-solid">
+																<input type="radio" id="radio_allergie_non" name="allergie_patient" value="nom_allergie" checked="checked" />
+																<span></span>Non</label>
+
+																
+															</div>
+														</div>
+														<div class="col-lg-3" id="container_allergie">
+															<label>Type d'Allergie</label>
+															<input type="text" id="id_allergie" class="form-control" placeholder="Type d'Allergie" />
+														</div>	
+													</div>	
 													
 													
 												</div>
@@ -97,10 +123,10 @@
 							<div class="card card-custom" data-card="true" id="kt_card_2">
 								<div class="card-header"  style="background-color: #D6EFFF !important;">
 									<div class="card-title">
-										<h3 class="card-label">VISITE</h3>
+										<i class="flaticon-medical" style="color: black !important;"></i>&nbsp;&nbsp;&nbsp;<h3 class="card-label" style="font: normal normal 600 16px Poppins;">VISITE</h3>
 									</div>
 									<div class="card-toolbar">
-										<a href="#" class="btn btn-icon btn-sm btn-hover-light-primary mr-1" data-card-tool="toggle" data-toggle="tooltip" data-placement="top" title="Toggle Card">
+										<a href="#" class="btn btn-icon btn-sm btn-hover-light-primary mr-1" data-card-tool="toggle" data-toggle="tooltip" data-placement="top" title="Minimiser">
 											<i class="ki ki-arrow-down icon-nm"></i>
 										</a>
 										
@@ -144,10 +170,10 @@
 							<div class="card card-custom" data-card="true" id="kt_card_3">
 								<div class="card-header"  style="background-color: #D6EFFF !important;">
 									<div class="card-title">
-										<h3 class="card-label">MUTUELLE</h3>
+										<i class="flaticon-list-1" style="color: black !important;"></i> &nbsp;&nbsp;&nbsp; <h3 class="card-label" style="font: normal normal 600 16px Poppins;">MUTUELLE</h3>
 									</div>
 									<div class="card-toolbar">
-										<a href="#" class="btn btn-icon btn-sm btn-hover-light-primary mr-1" data-card-tool="toggle" data-toggle="tooltip" data-placement="top" title="Toggle Card">
+										<a href="#" class="btn btn-icon btn-sm btn-hover-light-primary mr-1" data-card-tool="toggle" data-toggle="tooltip" data-placement="top" title="Minimiser">
 											<i class="ki ki-arrow-down icon-nm"></i>
 										</a>
 										
@@ -207,6 +233,8 @@
 
 
 $(document).ready(function(){
+	$('#container_allergie').hide()
+
 	var card1 = new KTCard('kt_card_1');
 	var card2 = new KTCard('kt_card_2');
 	var card3 = new KTCard('kt_card_3');
@@ -215,6 +243,16 @@ $(document).ready(function(){
         format:'dd/mm/yyyy',
         language:'fr'
     });
+
+
+	$('#radio_allergie_oui').click(function(){
+		$('#container_allergie').show()
+	})
+
+	$('#radio_allergie_non').click(function(){
+		$('#container_allergie').hide()
+	})
+
 
 	var array_salles=[]
 				$.ajaxSetup({
@@ -282,11 +320,14 @@ $(document).ready(function(){
 
 	 	 
 	 	
-	 	if ($("#radio_femme").prop("checked")) {
+	 	if($("#radio_femme").prop("checked")) {
 	 		var sexe_patient = 'femme'
 	 	}
-	 	else{
+	 	else if($("#radio_homme").prop("checked")){
 	 		var sexe_patient = 'homme'
+	 	}
+	 	else{
+	 		var sexe_patient = 'femme_enceinte'
 	 	}
 	 	
 	 	if(salles_ids.length != examen_ids.length){
@@ -299,13 +340,14 @@ $(document).ready(function(){
 	 	var cin = $('#id_patient_cin').val()
 	 	var nom_patient = $('#id_nom_patient').val()
 	 	var prenom_patient = $('#id_prenom_patient').val()
-	 	var civilite_patient = $('#id_patient_cin').val()
-	 	var adresse_patient = $('#id_patient_cin').val()
+	 	var civilite_patient = $('#id_civilite_patient').val()
+	 	var adresse_patient = $('#id_adresse_patient').val()
 	 	var tel_patient = $('#id_tel_patient').val()
 	 	var date_naissance = $('#kt_datepicker_2').val()
 	 	var mutuelle = $('#id_mutuelle').val()
+	 	var allergie = $('#id_allergie').val()
 
-	 	if(nom_patient.length == 0 || prenom_patient.length == 0 || cin.length == 0 || civilite_patient.length== 0){
+	 	if(nom_patient.length == 0 || prenom_patient.length == 0 || cin.length == 0 || civilite_patient.length== 0 || date_naissance.length == 0){
 	 		alert('Certains champs sont oibligatoire !')
 	 		return;
 	 	}
@@ -331,11 +373,12 @@ $(document).ready(function(){
 	                	tel_patient : tel_patient,
 	                	date_naissance : date_naissance,
 	                	sexe_patient : sexe_patient,
-	                	mutuelle : mutuelle
+	                	mutuelle : mutuelle,
+	                	allergie : allergie
 	                },
 	                success: function(data) {
-	                	
-	                	
+	                	toastr.success('Fiche patient créé avec succés','');
+	                	setTimeout(function(){ window.location.href="{{action('PatientController@getAllPatients')}}" }, 1500);
 	                }
 	            });
 	 })

@@ -166,7 +166,7 @@ $(document).ready(function(){
 	                		window.location.href="{{url('dashboard')}}";
 	                	}
 	                	else{
-	                		alert('wrong credentials');
+	                		toastr.error("Login/mot de pass n'est pas correct","");
 	                	}
 	                 
 	                },

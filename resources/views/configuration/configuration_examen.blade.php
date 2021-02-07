@@ -1,6 +1,9 @@
 @extends('layouts.layout')
 @section('content')
 
+
+
+<meta charset="utf-8">
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <div class="d-flex flex-column-fluid">
 							<!--begin::Container-->
@@ -88,11 +91,11 @@
 		                                            <label>Compte rendu :</label>
 		                                           	
 		                                          </div>
-		                                          <div class="col-lg-2">
-			                                          <div class="btn btn-primary btn-sm float-left">
-			                                              <span>Select your file</span>
-			                                              <input type="file" name="thumbnail" id="id_thumbnail">
-			                                            </div>
+		                                          <div class="col-lg-10">
+			                                          <div id="editor">
+													        
+
+													    </div>
 		                                           </div>
 		                                          
 		                                        </div>
@@ -148,15 +151,15 @@
 												<a id="id_link_download" href="" download>Visualiser le compte rendu</a>
 												<br><br><br>
 												<div class="form-group row">
-		                                          <div class="col-lg-4">
+		                                          <div class="col-lg-2">
 		                                            <label>Pour modifier le compte rendu,veuillez choisir un autre (l'ancien sera écrasé)</label>
 		                                           	
 		                                          </div>
-		                                          <div class="col-lg-2">
-			                                          <div class="btn btn-primary btn-sm float-left">
-			                                              <span>Select your file</span>
-			                                              <input type="file" name="thumbnail_modif" id="id_thumbnail_modif">
-			                                            </div>
+		                                          <div class="col-lg-10">
+			                                          <div id="editor_modif" >
+													        
+
+													    </div>
 		                                           </div>
 		                                          
 		                                        </div>
@@ -213,6 +216,7 @@
 
 
 <script src="{{ URL::asset('js/jquery.min.js') }}"></script>
+<script src="{{ URL::asset('ckeditor/ckeditor.js') }}"></script>
 
 <script type="text/javascript">
    
@@ -220,6 +224,9 @@
 
 
 $(document).ready(function(){
+
+var editor = CKEDITOR.replace('editor')
+var editor_modif = CKEDITOR.replace('editor_modif')
 
 		$('#id_link_download').hide();
 
@@ -318,15 +325,12 @@ $(document).ready(function(){
 		                	id : id
 		                },
 		                success: function(data) {
-		                	console.log(data)
+		                	
 		                	$('#examen_selected').val(data.id)
 		                	$('#id_new_examen_modif').val(data.nom_examen)
 		                	$('#id_montant_modif').val(data.montant)
-		                	if(data.compte_rendu){
-		                		$('#id_link_download').show()
-		                		$('#id_link_download').prop("href", base_url+'/'+data.compte_rendu)
+		                	editor_modif.setData( data.compte_rendu );
 
-		                	}
 		                }
 		            });
 			})
@@ -361,40 +365,32 @@ $(document).ready(function(){
 			var examen = $('#id_new_examen').val()
 			var salle = $('#salles_creation').val()
 			var montant = $('#id_montant_creation').val()
+			var compte_rendu = editor.getData();
 
-			var formData = new FormData();
 
-
-			formData.append("thumbnail",$("#id_thumbnail").prop("files")[0]);
-			formData.append("examen",examen);
-			formData.append("salle",salle);
-			formData.append("montant",montant);
-
-			$.ajaxSetup({
+				$.ajaxSetup({
 				    headers: {
 				        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				    }
 				});
 
-				
-
 				$.ajax({
-                        type: 'POST',
-                        url: "{{action('ExamenController@createExamen')}}",
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        data : formData ,
-                        
-                        success: function(data){
-                          	toastr.success('Examen créé avec succés','');
-	                		setTimeout(function(){ location.reload(); }, 2000);
-                           
-                        },
-                        error: function(){
-                         // alert('Something is missing in your form');
-                        }
-                    });
+	                url: "{{action('ExamenController@createExamen')}}",
+	                method: 'POST',
+	                data : {
+	                	examen : examen,
+	                	salle : salle,
+	                	montant : montant,
+	                	compte_rendu : compte_rendu
+	                },
+	                success: function(data) {
+	                	toastr.success('Examen créé avec succés','');
+                          setTimeout(function(){ location.reload(); }, 1000);
+	                	
+	                
+	                }
+	            });
+
 
 		})
 
@@ -404,44 +400,31 @@ $(document).ready(function(){
 			var id_exam = $('#id_type_examen').val()
 			var nom_exam = $('#id_new_examen_modif').val()
 			var montant = $('#id_montant_modif').val()
-			
+			var compte_rendu = editor_modif.getData()
 
-			var formData = new FormData();
-
-
-			formData.append("id_exam",id_exam);
-			formData.append("nom_exam",nom_exam);
-			formData.append("montant",montant);
-
-			if($("#id_thumbnail_modif").prop("files")[0]){
-				formData.append("thumbnail_modif",$("#id_thumbnail_modif").prop("files")[0]);
-			}
-
-			$.ajaxSetup({
+	
+				$.ajaxSetup({
 				    headers: {
 				        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				    }
 				});
 
-				
-
 				$.ajax({
-                        type: 'POST',
-                        url: "{{action('ExamenController@updateExamen')}}",
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        data : formData ,
-                        
-                        success: function(data){
-                          	toastr.success('Examen modifié avec succés','');
-	                		setTimeout(function(){ location.reload(); }, 2000);
-                           
-                        },
-                        error: function(){
-                         // alert('Something is missing in your form');
-                        }
-                    });
+	                url: "{{action('ExamenController@updateExamen')}}",
+	                method: 'POST',
+	                data : {
+	                	id_exam : id_exam,
+	                	nom_exam : nom_exam,
+	                	montant : montant,
+	                	compte_rendu : compte_rendu
+	                },
+	                success: function(data) {
+	                	toastr.success('Examen modifié avec succés','');
+                          			setTimeout(function(){ location.reload(); }, 1000);
+	                	
+	                
+	                }
+	            });
 		})	
 
 
@@ -465,7 +448,7 @@ $(document).ready(function(){
 	                success: function(data) {
 
 	                	toastr.success('Examen supprimé avec succés','');
-	                	setTimeout(function(){ location.reload(); }, 2000);
+	                	setTimeout(function(){ location.reload(); }, 1000);
 	                
 	                }
 	            });

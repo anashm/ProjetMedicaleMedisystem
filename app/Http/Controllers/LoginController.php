@@ -46,4 +46,11 @@ class LoginController extends Controller
         }				
 
     }
+
+    public function logOut(){
+        
+        Session::flush();
+        Auth::logout();
+        return redirect('/');
+    }
 }
