@@ -45,8 +45,8 @@
 		                                <td style="text-align: center;">{{ $patient->nom_salle }}</td>
 		                                <td style="text-align: center;">{{ $patient->nom_examen }}</td>
 		                                <td style="text-align: center;">{{ $patient->montant }}MAD</td>
-		                                <td hidden style="text-align: center;">{{ $patient->adresse }}</td>
-		                                @if($patient->compte_rendu)
+		                                <td hidden style="text-align: center;">{{ $patient->nom_medecin }}</td>
+		                               
 		                                	@if($patient->updated_compte_rendu == 0)
 		                              		<td style="text-align: center;"  class="donwload_file">
 		                              			<i class="flaticon-file-1" id="download{{ $patient->id_visite }}"  style="cursor: pointer;color: red"></i>
@@ -58,9 +58,7 @@
 		                              		 
 		                              			</td>
 		                              		@endif
-		                              	@else
-		                              		<td style="text-align: center;">-</td>
-		                              	@endif
+		                              	
 		                              	<td hidden style="text-align: center;">
 		                              	{{\Carbon\Carbon::parse($patient->date_naissance)->format('Y-m-d')  }}</td>
 		                              	
@@ -93,8 +91,8 @@
 				</div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" id="close_modal" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary font-weight-bold" id="save_changes">Save changes</button>
+                <button type="button" class="btn btn-light-primary font-weight-bold" id="close_modal" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary font-weight-bold" id="save_changes">Enregistrer</button>
             </div>
         </div>
     </div>
@@ -108,7 +106,7 @@
 <input type="hidden" id="id_hidden_row" name="">
 <input type="hidden" id="id_hidden_row_name_patient" name="">
 <input type="hidden" id="id_hidden_row_prenom_patient" name="">
-<input type="hidden" id="id_hidden_row_adresse_patient" name="">
+<input type="hidden" id="id_hidden_row_medecin_traitant" name="">
 <input type="hidden" id="id_hidden_row_examen_patient" name="">
 <input type="hidden" id="id_hidden_row_naissance_patient" name="">
 <input type="hidden" id="id_hidden_row_date_creation" name="">
@@ -132,9 +130,10 @@ var editor = CKEDITOR.replace('editor')
 $.noConflict();
 
 
-	$('#my_table').DataTable({
+	var table =$('#my_table').DataTable({
                         "orderClasses": false,
                         "select": "single",
+
                         "bPaginate": true,
                         "paging": true,
                         "lengthMenu": [5, 10, 15, 25, 50],
@@ -162,8 +161,7 @@ $.noConflict();
                         "info": false
                     });
 
-		var table = $('#my_table').DataTable();
-
+		
 
 
 	$(document).on("click",'.donwload_file', function(){
@@ -205,7 +203,7 @@ $.noConflict();
 	                	 replaced_examen = replaced_adresse.replace("examen_patient",examen_patient)
 	                	 replaced_date_creation = replaced_examen.replace("date_examen",date_creation)
 	                	 replaced_age = replaced_date_creation.replace("age_patient",age)
-
+	                	 replaced_medecin = replaced_age.replace("medecin_traitant",age)
 
        					 editor.setData(replaced_age);
 
@@ -261,7 +259,7 @@ $.noConflict();
 	    idVisite= table.row( this ).data()[0];
 	    nomPatient= table.row( this ).data()[2];
 	    prenomPatient= table.row( this ).data()[3];
-	    adressePatient= table.row( this ).data()[7];
+	    MedecinTraitant= table.row( this ).data()[7];
 	    examenPatient = table.row( this ).data()[5];
 	    datenaissancePatient = table.row( this ).data()[9];
 	    date_creation = table.row( this ).data()[1];
@@ -269,7 +267,7 @@ $.noConflict();
 	    $('#id_hidden_row').val(idVisite)
 	    $('#id_hidden_row_prenom_patient').val(prenomPatient)
 	    $('#id_hidden_row_name_patient').val(nomPatient)
-	    $('#id_hidden_row_adresse_patient').val(adressePatient)
+	    $('#id_hidden_row_medecin_traitant').val(MedecinTraitant)
 	    $('#id_hidden_row_examen_patient').val(examenPatient)
 	   	$('#id_hidden_row_naissance_patient').val(datenaissancePatient)
 	   	$('#id_hidden_row_date_creation').val(date_creation)

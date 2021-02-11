@@ -107,6 +107,20 @@
 															<label>Type d'Allergie</label>
 															<input type="text" id="id_allergie" class="form-control" placeholder="Type d'Allergie" />
 														</div>	
+
+														<div class="col-lg-3" >
+															<label>Medecin Traitants</label>
+															<select  class="form-control medecin_traitant" name="medecin_traitant" id="id_medecin_traitants">
+
+																
+															</select>
+
+														</div>
+														<div  style="margin-top: 30px;">	
+
+															<i class="flaticon2-plus text-primary" id="addMedecin" style="cursor: pointer;" ></i>
+														</div>
+														
 													</div>	
 													
 													
@@ -149,7 +163,7 @@
 											</select>
 									
 										
-											<i class="flaticon2-plus text-primary" id = "btnAddRow"></i>
+											<i class="flaticon2-plus text-primary" id = "btnAddRow" style="cursor: pointer;" ></i>
 											
 											
 									
@@ -170,7 +184,7 @@
 							<div class="card card-custom" data-card="true" id="kt_card_3">
 								<div class="card-header"  style="background-color: #D6EFFF !important;">
 									<div class="card-title">
-										<i class="flaticon-list-1" style="color: black !important;"></i> &nbsp;&nbsp;&nbsp; <h3 class="card-label" style="font: normal normal 600 16px Poppins;">MUTUELLE</h3>
+										<i class="flaticon-list-1" style="color: black !important;"></i> &nbsp;&nbsp;&nbsp; <h3 class="card-label" style="font: normal normal 600 16px Poppins;">ENREGISTREMENT / COTATIONS</h3>
 									</div>
 									<div class="card-toolbar">
 										<a href="#" class="btn btn-icon btn-sm btn-hover-light-primary mr-1" data-card-tool="toggle" data-toggle="tooltip" data-placement="top" title="Minimiser">
@@ -180,38 +194,66 @@
 									</div>
 								</div>
 								<div class="card-body">
-										<div class="card-body">
-													<div class="form-group row">
-														<div class="col-lg-2">
-															<label>Vous avez une mutuelle</label>
-															
-															
-														</div>
-														<div class="col-lg-3">
-															<label>Vous avez une mutuelle</label>
-															<div class="radio-inline">
-																<label class="radio radio-solid">
-																<input type="radio" name="example_2" checked="checked" value="2" />
-																<span></span>Oui</label>
-																<label class="radio radio-solid">
-																<input type="radio" name="example_2" value="2" />
-																<span></span>Non</label>
-															</div>
-															
-														</div>
-														<div class="col-lg-3">
-															
-															<select name="mutuelle" id="id_mutuelle" class="form-control">
-																<option disabled selected >Choisir une mutuelle</option>
-																<option value="Mutuelle1">Mutuelle1</option>
-																<option value="Mutuelle2">Mutuelle2</option>
-																<option value="Mutuelle3">Mutuelle3</option>
-															</select>
-															
-														</div>
-													</div>
-													<button type="button" id="valider" class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3">enregistrer</button>
+										<div class="form-group row">
+											<div class="col-lg-8">
+												<table id="table_examens"  class="table table-striped table-bordered table-hover table-checkable order-column " data-toggle="context" data-target="#context-menu2">
+							                    <thead>
+							                        <tr>
+							                        	<th  style="text-align: center;">Examen</th>
+							                        	<th  style="text-align: center;">Prix unitaire</th>
+							                            <th style="text-align: center;">Prix coté</th>
+							                           	<th style="text-align: center;">Actions</th>
+							                            
+							                        </tr>
+							                    </thead>
+							                    <tbody data-toggle="context" >
+							                    	<tr>
+							                    		
+							                    	</tr>
+
+							                    </tbody>
+							                    <tfoot>
+										            <tr>
+										                <th colspan="4" style="text-align:right">Total:</th>
+										                <th ><span id="colonne_total">0</span></th>
+										            </tr>
+										        </tfoot>
+
+							                    </table>
+											</div>
+
 										</div>
+
+
+										<div class="form-group row">
+											
+											<div class="col-lg-3">
+												<label>Vous avez une mutuelle</label>
+												<div class="radio-inline">
+													<label class="radio radio-solid">
+													<input type="radio" name="example_2" checked="checked" value="2" />
+													<span></span>Oui</label>
+													<label class="radio radio-solid">
+													<input type="radio" name="example_2" value="2" />
+													<span></span>Non</label>
+												</div>
+												
+											</div>
+											<div class="col-lg-4">
+												
+												<select name="mutuelle" id="id_mutuelle" class="form-control">
+													<option disabled selected >Choisir une mutuelle</option>
+													<option value="Mutuelle1">Mutuelle1</option>
+													<option value="Mutuelle2">Mutuelle2</option>
+													<option value="Mutuelle3">Mutuelle3</option>
+												</select>
+												
+											</div>
+										</div>
+
+											
+										<button type="button" id="valider" class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3">enregistrer</button>
+										
 								</div>
 							</div>
 					</div>
@@ -219,7 +261,76 @@
 			
 	</div>
 </div>
+<!-- modale fade -->
 
+<div class="modal fade" id="exampleModalLong" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ajouter Medecin</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body ">
+               <input type="text" class="form-control" id="id_nouveau_medecin" name="" placeholder="Entrer le nom du Medecin">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" id="close_modal" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary font-weight-bold" id="save_changes_medecin">Ajouter</button>
+            </div>
+        </div>
+    </div>
+</div>
+<button id="lanch_modal" style="display: none;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+    Launch demo modal
+</button>
+<!-- end modal -->
+
+
+<!-- modale fade -->
+
+<div class="modal fade" id="ModalPrixCote" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modifier Prix Coté</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body ">
+               <input type="text" class="form-control" id="id_nouveau_prix_cote" name="" placeholder="Prix Coté">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" id="close_modal_prix_cote" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary font-weight-bold" id="save_prix_cote">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+</div>
+<button id="id_modal_prix_cote" style="display: none;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalPrixCote">
+    Launch demo modal
+</button>
+<!-- end modal -->
+
+<div id="context-menu2">
+   <ul class="dropdown-menu pull-left" role="menu">
+   
+       <li>
+           <a   id="menu_modifier">
+               <i class="fa fa-pencil fa-fw"></i> Modifier </a>
+       </li>
+       
+       <li>
+           <a  id="supprimer">
+               <i class="fa fa-trash"></i> Supprimer </a>
+       </li>
+      
+      
+
+   </ul>
+</div>
 
 @endsection
 <script>var KTAppSettings = { "breakpoints": { "sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1400 }, "colors": { "theme": { "base": { "white": "#ffffff", "primary": "#3699FF", "secondary": "#E5EAEE", "success": "#1BC5BD", "info": "#8950FC", "warning": "#FFA800", "danger": "#F64E60", "light": "#E4E6EF", "dark": "#181C32" }, "light": { "white": "#ffffff", "primary": "#E1F0FF", "secondary": "#EBEDF3", "success": "#C9F7F5", "info": "#EEE5FF", "warning": "#FFF4DE", "danger": "#FFE2E5", "light": "#F3F6F9", "dark": "#D6D6E0" }, "inverse": { "white": "#ffffff", "primary": "#ffffff", "secondary": "#3F4254", "success": "#ffffff", "info": "#ffffff", "warning": "#ffffff", "danger": "#ffffff", "light": "#464E5F", "dark": "#ffffff" } }, "gray": { "gray-100": "#F3F6F9", "gray-200": "#EBEDF3", "gray-300": "#E4E6EF", "gray-400": "#D1D3E0", "gray-500": "#B5B5C3", "gray-600": "#7E8299", "gray-700": "#5E6278", "gray-800": "#3F4254", "gray-900": "#181C32" } }, "font-family": "Poppins" };</script>
@@ -227,12 +338,14 @@
 
 <script src="{{ URL::asset('js/jquery.min.js') }}"></script>
 <script src="{{ URL::asset('js/bootstrap-datepicker.fr.min.js') }}"></script>	
+<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
    
 
 
 
 $(document).ready(function(){
+
 	$('#container_allergie').hide()
 
 	var card1 = new KTCard('kt_card_1');
@@ -278,6 +391,31 @@ $(document).ready(function(){
 	                }
 	            });
 
+	            $.ajaxSetup({
+				    headers: {
+				        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				    }
+				});
+
+				$.ajax({
+	                url: "{{action('MedecinTraintantController@getAllMedecinTraitants')}}",
+	                method: 'GET',
+	                
+	                success: function(data) {
+	                	$('.medecin_traitant').append('<option disabled selected >Choisir un Medecin</option>')
+	                	$.each(data, function(index, value) {
+							
+						    $('.medecin_traitant').append($('<option>', { 
+						        value: value.id,
+						        text : value.nom_medecin
+						    } ));
+						});
+	                
+	                }
+	            });
+
+	
+		
 
 	 $(document).on("change",'.salles_class', function(){
 	
@@ -312,6 +450,41 @@ $(document).ready(function(){
 	            });
 
 	});
+
+	 $('#addMedecin').click(function(){
+	 	$('#lanch_modal').click()
+	 })
+
+
+	 $('#save_changes_medecin').click(function(){
+	 		var nom_medecin = $('#id_nouveau_medecin').val()
+
+	 		$.ajaxSetup({
+				    headers: {
+				        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				    }
+				});
+
+				$.ajax({
+	                url: "{{action('MedecinTraintantController@createMedecin')}}",
+	                method: 'POST',
+	                data : {
+	                	nom_medecin : nom_medecin
+	                },	                
+	                success: function(data) {
+	                	
+	                	$('.medecin_traitant').append($('<option>', { 
+						        value: data.id,
+						        text : data.nom_medecin
+						    } ));
+	                	$('#close_modal').click();
+	                	toastr.success('Medecin ajouté avec succés','');
+	                }
+	            });
+
+	 })
+
+
 
 	 $('#valider').click(function(){
 
@@ -437,5 +610,122 @@ $(document).ready(function(){
           
            
 	})
+
+	var last_clicked;
+	var oldMontant;
+	var prix_cote;
+
+	function round(value, exp) {
+  if (typeof exp === 'undefined' || +exp === 0)
+    return Math.round(value);
+
+  value = +value;
+  exp = +exp;
+
+  if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0))
+    return NaN;
+
+  // Shift
+  value = value.toString().split('e');
+  value = Math.round(+(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp)));
+
+  // Shift back
+  value = value.toString().split('e');
+  return +(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp));
+}
+
+	$(document).on("click",'.edit_prix_cote', function(){
+		 prix_cote = $(this).attr('id');
+		
+		$('#id_modal_prix_cote').click()
+		$('#id_nouveau_prix_cote').val(prix_cote)
+
+		last_clicked = this
+		
+		
+		
+	})
+
+	$(document).on("click",'#save_prix_cote', function(){
+		var new_prix = $('#id_nouveau_prix_cote').val()
+		var old_total = $('#colonne_total').text()
+		var old_prix = prix_cote
+
+		var newTotal = 	parseFloat(old_total) - parseFloat(old_prix) + parseFloat(new_prix)
+
+		 $(last_clicked).closest('td').siblings(':eq(2)').text(new_prix);
+
+		 $('#close_modal_prix_cote').click()
+
+		 $('#colonne_total').text(round(newTotal,2)+' MAD')
+		 
+	})
+	
+	$(document).on("click",'.delete_prix_cote', function(){
+		var old_total = $('#colonne_total').text()
+		var old_prix_row = $(this).closest('td').siblings(':eq(2)').text()
+		
+		
+		$(this).closest("tr").remove();
+		var newTotal = 	parseFloat(old_total) - parseFloat(old_prix_row)
+		$('#colonne_total').text(round(newTotal,2)+' MAD')
+	})
+
+	$(document).on("change",'.type_examen', function(){
+
+		var id_examen = this.value;
+		
+		$.ajaxSetup({
+				    headers: {
+				        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				    }
+				});
+
+				$.ajax({
+	                url: "{{action('ExamenController@GetMontantExamen')}}",
+	                method: 'POST',
+	                data : {
+	                	id_examen : id_examen
+	                },
+	                success: function(data) {
+	                	 oldMontant = $('#colonne_total').text()
+	                	console.log(oldMontant)
+	                	newRow = `<tr>
+	                				<td>${data.nom_examen}</td>
+	                				<td>${data.montant}</td>
+	                				<td ><span class="prix_cote">${data.montant}</span></td>
+	                				<td>
+	                				<i title="Modifier Prix coté" class="flaticon-edit edit_prix_cote" id="${data.montant}"  style="cursor: pointer;color:blue"></i>
+	                				<i style="cursor: pointer; margin-left:5px;color:blue" title="Supprimer ligne" class='flaticon-delete delete_prix_cote'></i>
+	                				</td>
+	                				</tr>`;
+
+	                	$("#table_examens tbody").append(newRow);	
+	                	var newMontant  = parseFloat(oldMontant ) + parseFloat(data.montant)
+	                	//console.log(parseFloat(data.montant),parseFloat(oldMontant ))
+	                	$('#colonne_total').text(newMontant+' MAD')		
+	                }
+	            });
+
+	})	
+
+	$.noConflict();
+
+	var table = $('#table_examens').DataTable({
+                       	 dom: 'Brtip',
+                       	 "bFilter": false,
+					      buttons: [
+					           'csv'
+					      ] ,
+
+                    });
+
+
+
+	$('#table_examens').on( 'mousedown', 'tr', function () {
+    	lastclicked_mp = $(this);
+    	$('#context-menu2').show();
+  });
+
 })
 </script>

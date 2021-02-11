@@ -67,5 +67,13 @@ class ExamenController extends Controller
     }
 
 
+    public function GetMontantExamen(Request $req){
+
+        $examen = TypeExamen::where('id',$req->id_examen)
+                            ->select('montant' , 'nom_examen')
+                            ->first();
+
+        return $examen;
+    }
 
 }

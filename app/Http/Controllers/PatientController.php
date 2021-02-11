@@ -41,7 +41,27 @@ class PatientController extends Controller
 
             $compte_rendu = TypeExamen::where('id',$array_examen[$i])->select('compte_rendu')->first();
 
-            $visite->compte_rendu_patient = $compte_rendu->compte_rendu;
+            if($compte_rendu->compte_rendu)
+                $visite->compte_rendu_patient = $compte_rendu->compte_rendu;
+            else{
+                $visite->compte_rendu_patient = '<p style="text-align:right"><span style="font-size:12pt"><span style="font-family:&quot;Times New Roman&quot;,serif"><em><span style="font-size:14.0pt"><span style="color:black">Kenitra le ,</span></span></em> <em><span style="font-size:14.0pt"><span style="color:black">date_examen</span></span></em></span></span></p>
+
+                    <p><span style="font-size:12pt"><span style="font-family:&quot;Times New Roman&quot;,serif"><em><span style="font-size:14.0pt"><span style="color:black">Nom&nbsp; Patient&nbsp;: name_patient</span></span></em></span></span></p>
+
+                    <p><span style="font-size:12pt"><span style="font-family:&quot;Times New Roman&quot;,serif"><em><span style="font-size:14.0pt"><span style="color:black">Prenom Patient&nbsp;: prenom_patient</span></span></em></span></span></p>
+
+                    <p><span style="font-size:12pt"><span style="font-family:&quot;Times New Roman&quot;,serif"><em><span style="font-size:14.0pt"><span style="color:black">Age Patient&nbsp;: age_patient</span></span></em></span></span></p>
+
+                    <p><span style="font-size:12pt"><span style="font-family:&quot;Times New Roman&quot;,serif"><em><span style="font-size:14.0pt"><span style="color:black">Medecin traitant&nbsp;: Dr medecin_traitant</span></span></em></span></span></p>
+
+                    <p>&nbsp;</p>
+
+                    <p>&nbsp;</p>
+
+                    <p style="text-align:center"><span style="font-size:12pt"><span style="font-family:&quot;Times New Roman&quot;,serif"><em><span style="font-size:14.0pt"><span style="color:black">examen_patient</span></span></em></span></span></p>';
+            }
+
+
     		$visite->save();
     	}
     	return 'succes';
@@ -57,12 +77,13 @@ class PatientController extends Controller
         $patients = Patient::join("visite" , 'visite.id_patient' , '=' ,'patients.id')
                             ->join('type_examens','type_examens.id','=','visite.id_examen')
                             ->join('salles','salles.id','=','visite.id_salle')
+                            ->leftjoin('medecin_traitants','medecin_traitants.id','=','patients.id_medecin_traitant')
                             ->select('patients.nom',
                                      'patients.prenom',
                                      'type_examens.nom_examen',
                                      'salles.nom_salle',
                                      'type_examens.montant',
-                                     'type_examens.compte_rendu',
+                                     'medecin_traitants.nom_medecin',
                                      'patients.adresse',
                                      'visite.id as id_visite',
                                      'patients.date_naissance',

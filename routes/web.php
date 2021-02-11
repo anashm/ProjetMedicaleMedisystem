@@ -70,4 +70,20 @@ Route::post('/updateExamen','ExamenController@updateExamen')->middleware('anas')
 
 Route::post('/deleteExamen','ExamenController@deleteExamen')->middleware('anas');
 
+Route::post('/GetMontantExamen','ExamenController@GetMontantExamen')->middleware('anas');
+
+
+
+
+
+Route::get('/configMedecinTraitant','MedecinTraintantController@configMedecinTraitant')->middleware('anas');
+
+Route::post('/createMedecin','MedecinTraintantController@createMedecin')->middleware('anas');
+
+Route::get('/getAllMedecinTraitants','MedecinTraintantController@getAllMedecinTraitants')->middleware('anas');
+
+Route::post('/updateMedecin','MedecinTraintantController@updateMedecin')->middleware('anas');
+
+Route::post('/deleteMedecin','MedecinTraintantController@deleteMedecin')->middleware('anas');
+
 
