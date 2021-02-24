@@ -109,7 +109,7 @@
 														</div>	
 
 														<div class="col-lg-3" >
-															<label>Medecin Traitants</label>
+															<label>Medecin Traitants *</label>
 															<select  class="form-control medecin_traitant" name="medecin_traitant" id="id_medecin_traitants">
 
 																
@@ -231,15 +231,15 @@
 												<label>Vous avez une mutuelle</label>
 												<div class="radio-inline">
 													<label class="radio radio-solid">
-													<input type="radio" name="example_2" checked="checked" value="2" />
+													<input type="radio" id="oui_mutuelle" name="example_2" checked="checked" value="2" />
 													<span></span>Oui</label>
 													<label class="radio radio-solid">
-													<input type="radio" name="example_2" value="2" />
+													<input type="radio" id="non_mutuelle" checked="checked" name="example_2" value="2" />
 													<span></span>Non</label>
 												</div>
 												
 											</div>
-											<div class="col-lg-4">
+											<div class="col-lg-4" id="container_mutuelle">
 												
 												<select name="mutuelle" id="id_mutuelle" class="form-control">
 													<option disabled selected >Choisir une mutuelle</option>
@@ -347,6 +347,8 @@
 $(document).ready(function(){
 
 	$('#container_allergie').hide()
+	$('#container_mutuelle').hide()
+
 
 	var card1 = new KTCard('kt_card_1');
 	var card2 = new KTCard('kt_card_2');
@@ -364,6 +366,15 @@ $(document).ready(function(){
 
 	$('#radio_allergie_non').click(function(){
 		$('#container_allergie').hide()
+	})
+
+
+	$('#oui_mutuelle').click(function(){
+		$('#container_mutuelle').show()
+	})
+
+	$('#non_mutuelle').click(function(){
+		$('#container_mutuelle').hide()
 	})
 
 
@@ -491,7 +502,16 @@ $(document).ready(function(){
 	 	var salles_ids = $('.salles_class').map((_,el) => el.value).get()
 	 	var examen_ids = $('.type_examen').map((_,el) => el.value).get()
 
-	 	 
+	 	var array_prix_cotes = [];
+	 	 //var prix_cote = $('.prix_cote').closest('tr').find('td:eq(2)').text();
+	 	 $('.prix_cote').closest('tr').find('td:eq(2)').each(
+		    function (i) {
+		    	array_prix_cotes.push($(this).text())
+		   
+		    });
+
+	 	 console.log(array_prix_cotes)
+	 	
 	 	
 	 	if($("#radio_femme").prop("checked")) {
 	 		var sexe_patient = 'femme'
@@ -519,9 +539,11 @@ $(document).ready(function(){
 	 	var date_naissance = $('#kt_datepicker_2').val()
 	 	var mutuelle = $('#id_mutuelle').val()
 	 	var allergie = $('#id_allergie').val()
+	 	var medecin_traitants = $("#id_medecin_traitants").val();
 
-	 	if(nom_patient.length == 0 || prenom_patient.length == 0 || cin.length == 0 || civilite_patient.length== 0 || date_naissance.length == 0){
-	 		alert('Certains champs sont oibligatoire !')
+	 	
+	 	if(nom_patient.length == 0 || prenom_patient.length == 0 || cin.length == 0 || civilite_patient.length== 0 || date_naissance.length == 0  || !medecin_traitants){
+	 		alert('Certains champs sont obligatoires !')
 	 		return;
 	 	}
 
@@ -547,11 +569,16 @@ $(document).ready(function(){
 	                	date_naissance : date_naissance,
 	                	sexe_patient : sexe_patient,
 	                	mutuelle : mutuelle,
-	                	allergie : allergie
+	                	allergie : allergie,
+	                	medecin_traitants : medecin_traitants,
+	                	array_prix_cotes : array_prix_cotes
 	                },
 	                success: function(data) {
 	                	toastr.success('Fiche patient créé avec succés','');
 	                	setTimeout(function(){ window.location.href="{{action('PatientController@getAllPatients')}}" }, 1500);
+	                },
+	                 error: function(){
+	                	alert('Erreur lors de le création de la fiche ! Veuillez vérifier les paramètres entrés');
 	                }
 	            });
 	 })
@@ -616,23 +643,23 @@ $(document).ready(function(){
 	var prix_cote;
 
 	function round(value, exp) {
-  if (typeof exp === 'undefined' || +exp === 0)
-    return Math.round(value);
+	  if (typeof exp === 'undefined' || +exp === 0)
+	    return Math.round(value);
 
-  value = +value;
-  exp = +exp;
+	  value = +value;
+	  exp = +exp;
 
-  if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0))
-    return NaN;
+	  if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0))
+	    return NaN;
 
-  // Shift
-  value = value.toString().split('e');
-  value = Math.round(+(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp)));
+	  // Shift
+	  value = value.toString().split('e');
+	  value = Math.round(+(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp)));
 
-  // Shift back
-  value = value.toString().split('e');
-  return +(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp));
-}
+	  // Shift back
+	  value = value.toString().split('e');
+	  return +(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp));
+	}
 
 	$(document).on("click",'.edit_prix_cote', function(){
 		 prix_cote = $(this).attr('id');
@@ -653,7 +680,7 @@ $(document).ready(function(){
 
 		var newTotal = 	parseFloat(old_total) - parseFloat(old_prix) + parseFloat(new_prix)
 
-		 $(last_clicked).closest('td').siblings(':eq(2)').text(new_prix);
+		 $(last_clicked).closest('td').siblings(':eq(2)').html('<span class="prix_cote">'+new_prix+'</span>');
 
 		 $('#close_modal_prix_cote').click()
 

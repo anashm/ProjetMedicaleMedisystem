@@ -28,7 +28,7 @@
 		                            <th style="text-align: center;">Salle</th>
 		                            <th style="text-align: center;">Nom Examen</th>
 		                            <th style="text-align: center;">Montant</th>
-		                            <th hidden style="text-align: center;">Adresse</th>
+		                            <th hidden style="text-align: center;">Nom Medecin</th>
 		                            <th style="text-align: center;">Compte Rendu</th>
 		                            <th hidden style="text-align: center;">Date_naissance</th>
 		                            
@@ -44,7 +44,7 @@
 		                                <td style="text-align: center;">{{ $patient->prenom }}</td>
 		                                <td style="text-align: center;">{{ $patient->nom_salle }}</td>
 		                                <td style="text-align: center;">{{ $patient->nom_examen }}</td>
-		                                <td style="text-align: center;">{{ $patient->montant }}MAD</td>
+		                                <td style="text-align: center;">{{ $patient->prix_cote }} MAD</td>
 		                                <td hidden style="text-align: center;">{{ $patient->nom_medecin }}</td>
 		                               
 		                                	@if($patient->updated_compte_rendu == 0)
@@ -136,7 +136,7 @@ $.noConflict();
 
                         "bPaginate": true,
                         "paging": true,
-                        "lengthMenu": [5, 10, 15, 25, 50],
+                        "lengthMenu": [10, 15, 25, 50],
                         "language": {
                             "select": {
                                 "rows": "%d ligne"
@@ -174,7 +174,7 @@ $.noConflict();
 		var examen_patient = $('#id_hidden_row_examen_patient').val()
 		var date_creation = $('#id_hidden_row_date_creation').val()
 		var date_naissance = $('#id_hidden_row_naissance_patient').val()
-
+		var medecin_traitant = $('#id_hidden_row_medecin_traitant').val()
 		
 		dob = new Date(date_naissance);
 		var today = new Date();
@@ -197,15 +197,20 @@ $.noConflict();
 	                },
 	                success: function(data) {
 	                	var edata = data;
-	                	var replaced_name = edata.replace("name_patient", nom_patient); // you could also use a regex in the replace 
-	                	 replaced_prenom = replaced_name.replace("prenom_patient", prenom_patient);
-	                	 replaced_adresse = replaced_prenom.replace("adresse_patient",adresse_patient) 
-	                	 replaced_examen = replaced_adresse.replace("examen_patient",examen_patient)
-	                	 replaced_date_creation = replaced_examen.replace("date_examen",date_creation)
-	                	 replaced_age = replaced_date_creation.replace("age_patient",age)
-	                	 replaced_medecin = replaced_age.replace("medecin_traitant",age)
+	                		
+	                		//var count_string = (edata.match(/prenom_patient/g) || []).length;
+	                		//to mesure ch7al mn occ dial klma f text kamal , khass dir for loop
+		                	var replaced_name = edata.replace("name_patient", nom_patient); 
+		                	 replaced_prenom = replaced_name.replace("prenom_patient", prenom_patient);
+		                	 replaced_adresse = replaced_prenom.replace("adresse_patient",adresse_patient) 
+		                	 replaced_examen = replaced_adresse.replace("examen_patient",examen_patient)
+		                	 replaced_date_creation = replaced_examen.replace("date_examen",date_creation)
+		                	 replaced_age = replaced_date_creation.replace("age_patient",age)
+		                	 replaced_medecin = replaced_age.replace("medecin_traitant",medecin_traitant)
 
-       					 editor.setData(replaced_age);
+	                
+	                
+       					 editor.setData(replaced_medecin);
 
 	                		
 	                	$('#lanch_modal').click();

@@ -587,7 +587,7 @@
 						<i class="symbol-badge bg-success"></i>
 					</div>
 					<div class="d-flex flex-column">
-						<a href="#" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">James Jones</a>
+						<a href="#" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">Anas Anas</a>
 						<div class="text-muted mt-1">Administrateur</div>
 						<div class="navi mt-2">
 							<a href="#" class="navi-item">
@@ -619,7 +619,7 @@
 				<!--begin::Nav-->
 				<div class="navi navi-spacer-x-0 p-0">
 					<!--begin::Item-->
-					<a href="custom/apps/user/profile-1/personal-information.html" class="navi-item">
+					<a href="#" class="navi-item">
 						<div class="navi-link">
 							<div class="symbol symbol-40 bg-light mr-3">
 								<div class="symbol-label">
@@ -644,7 +644,7 @@
 					</a>
 					<!--end:Item-->
 					<!--begin::Item-->
-					<a href="custom/apps/user/profile-3.html" class="navi-item">
+					<a href="#" class="navi-item">
 						<div class="navi-link">
 							<div class="symbol symbol-40 bg-light mr-3">
 								<div class="symbol-label">
@@ -671,7 +671,7 @@
 					</a>
 					<!--end:Item-->
 					<!--begin::Item-->
-					<a href="custom/apps/user/profile-2.html" class="navi-item">
+					<a href="#" class="navi-item">
 						<div class="navi-link">
 							<div class="symbol symbol-40 bg-light mr-3">
 								<div class="symbol-label">
@@ -696,7 +696,7 @@
 					</a>
 					<!--end:Item-->
 					<!--begin::Item-->
-					<a href="custom/apps/userprofile-1/overview.html" class="navi-item">
+					<a href="#" class="navi-item">
 						<div class="navi-link">
 							<div class="symbol symbol-40 bg-light mr-3">
 								<div class="symbol-label">

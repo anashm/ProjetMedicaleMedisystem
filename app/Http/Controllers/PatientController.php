@@ -27,17 +27,20 @@ class PatientController extends Controller
     	$patient->mutuelle = $req->mutuelle;
         $patient->date_creation = Carbon::now();
         $patient->allergie = $req->allergie;
+        $patient->id_medecin_traitant = $req->medecin_traitants;
 
     	$patient->save();
 
     	$array_salles = $req->salles;
     	$array_examen = $req->examens;
+        $array_prix_cotes = $req->array_prix_cotes;
     	for ($i=0; $i <count($array_salles) ; $i++) { 
     		 
     		$visite = new Visite();
     		$visite->id_patient = $patient->id;
     		$visite->id_salle = $array_salles[$i];
     		$visite->id_examen = $array_examen[$i];
+            $visite->prix_cote = $array_prix_cotes[$i];
 
             $compte_rendu = TypeExamen::where('id',$array_examen[$i])->select('compte_rendu')->first();
 
@@ -86,6 +89,7 @@ class PatientController extends Controller
                                      'medecin_traitants.nom_medecin',
                                      'patients.adresse',
                                      'visite.id as id_visite',
+                                     'visite.prix_cote',
                                      'patients.date_naissance',
                                      'patients.date_creation',
                                      'visite.updated_compte_rendu'

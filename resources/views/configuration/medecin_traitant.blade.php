@@ -89,7 +89,7 @@
 
 												<div class="form-group row">
 														<div class="col-lg-5">
-															<input type="text" id="id_nom_medecin_modifiee" class="form-control" placeholder="Choisir une salle" />
+															<input type="text" id="id_nom_medecin_modifiee" class="form-control" placeholder="Choisir un Medecin" />
 															<input type="hidden" id="hidden_medecin_modif" name="">
 														</div>
 												</div>

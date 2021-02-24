@@ -3,7 +3,7 @@
 					<!--begin::Brand-->
 					<div class="brand flex-column-auto" id="kt_brand">
 						<!--begin::Logo-->
-						<a href="index.html" class="brand-logo" style="width: 31%">
+						<a href=" {{ url('dashboard')}} " class="brand-logo" style="width: 31%">
 							<img alt="Logo" src="{{ URL::asset('images/logo.png') }}" width="100%" />
 						</a>
 						<!--end::Logo-->
