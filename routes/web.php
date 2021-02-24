@@ -29,6 +29,12 @@ Route::get('/createPatient' , function () {
 })->middleware('anas');
 
 
+Route::get('/test' , function () {
+	
+    return view('patient.test'); 
+})->middleware('anas');
+
+
 
 Route::get('/logOut','LoginController@logOut')->middleware('anas');
 

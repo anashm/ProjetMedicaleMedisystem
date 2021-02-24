@@ -10,6 +10,8 @@
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
 
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css" />
+
 
 <div class="d-flex flex-column-fluid">
 							<!--begin::Container-->
@@ -115,7 +117,26 @@
 <script>var KTAppSettings = { "breakpoints": { "sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1400 }, "colors": { "theme": { "base": { "white": "#ffffff", "primary": "#3699FF", "secondary": "#E5EAEE", "success": "#1BC5BD", "info": "#8950FC", "warning": "#FFA800", "danger": "#F64E60", "light": "#E4E6EF", "dark": "#181C32" }, "light": { "white": "#ffffff", "primary": "#E1F0FF", "secondary": "#EBEDF3", "success": "#C9F7F5", "info": "#EEE5FF", "warning": "#FFF4DE", "danger": "#FFE2E5", "light": "#F3F6F9", "dark": "#D6D6E0" }, "inverse": { "white": "#ffffff", "primary": "#ffffff", "secondary": "#3F4254", "success": "#ffffff", "info": "#ffffff", "warning": "#ffffff", "danger": "#ffffff", "light": "#464E5F", "dark": "#ffffff" } }, "gray": { "gray-100": "#F3F6F9", "gray-200": "#EBEDF3", "gray-300": "#E4E6EF", "gray-400": "#D1D3E0", "gray-500": "#B5B5C3", "gray-600": "#7E8299", "gray-700": "#5E6278", "gray-800": "#3F4254", "gray-900": "#181C32" } }, "font-family": "Poppins" };</script>
 
 <script src="{{ URL::asset('js/jquery.min.js') }}"></script>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
 <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
+
+
+
+
 <script src="{{ URL::asset('ckeditor/ckeditor.js') }}"></script>
 
 <script type="text/javascript">
@@ -131,34 +152,49 @@ $.noConflict();
 
 
 	var table =$('#my_table').DataTable({
-                        "orderClasses": false,
-                        "select": "single",
+                        dom: 'Bfrtip',
+				        buttons: [{
 
-                        "bPaginate": true,
-                        "paging": true,
-                        "lengthMenu": [10, 15, 25, 50],
-                        "language": {
-                            "select": {
-                                "rows": "%d ligne"
-                            },
-                            "searchPlaceholder": "Chercher ",
-                            "sProcessing": "Traitement en cours...",
-                            "sSearch": "",
-                            "sLengthMenu": "Afficher _MENU_",
-                            "sInfo": "_START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
-                            "sInfoEmpty": "0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
-                            "sInfoFiltered": "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
-                            "sInfoPostFix": "",
-                            "sLoadingRecords": "Chargement en cours...",
-                            "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
-                            "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
-                            "oAria": {
-                                "sSortAscending": ": activer pour trier la colonne par ordre croissant",
-                                "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
-                            },
+						         extend: 'excel',
+						         // text:'<i class="fa fa-files-o"></i>',
+						         filename: 'Liste Patients Medisysteme',
+						         exportOptions: {
+						           columns: ':visible'
+						          
+						        }
 
-                        },
-                        "info": false
+
+						        }
+				            
+				            
+				        ],
+				        "lengthMenu": [10, 15, 25, 50],
+				         "language": {
+			                            "select": {
+			                                "rows": "%d ligne"
+			                            },
+			                            "searchPlaceholder": "Chercher ",
+			                            "sProcessing": "Traitement en cours...",
+			                            "sSearch": "",
+			                            "sLengthMenu": "Afficher _MENU_",
+			                            "sInfo": "_START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+			                            "sInfoEmpty": "0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+			                            "sInfoFiltered": "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+			                            "sInfoPostFix": "",
+			                            "sLoadingRecords": "Chargement en cours...",
+			                            "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
+			                            "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
+			                            "oAria": {
+			                                "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+			                                "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+			                            },
+
+			                        },
+			            "columnDefs":[
+					        {
+					          'targets':[1,2,3]
+					        }
+					      ]
                     });
 
 		
